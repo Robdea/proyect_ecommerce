@@ -12,32 +12,34 @@ export default function RegisterPage() {
     };
 
     return (
-    <div>
-        <AuthForm
-            handleSubmit={handleSubmit}
-            textBttn='Registrarse'
-            isLoading={registerStatus}
-        >
-            <input
-                type="text"
-                placeholder="Username"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
-            {registerStatus === "error" && <p>Error al registrar: {registerError?.message}</p>}
-        </AuthForm>
+    <div className='flex justify-center items-center h-screen bg-gray-100'>
+        <div className='bg-white p-10'>
+            <AuthForm
+                handleSubmit={handleSubmit}
+                textBttn='Registrarse'
+                isLoading={registerStatus}
+            >
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                />
+                {registerStatus === "error" && <p>Error al registrar: {registerError?.message}</p>}
+            </AuthForm>
+        </div>
     </div>
   )
 }

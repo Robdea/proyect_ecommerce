@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router"
 import RegisterPage from "./features/auth/view/RegisterPage"
 import LoginPage from "./features/auth/view/LoginPage"
-import PostPage from "./features/posts/view/PostPage"
+import MainLayout from "./layouts/MainLayout"
+import ProductDetails from "./features/products/view/ProductDetails"
+import HomePage from "./pages/HomePage"
+import DashBoard from "./pages/DashBoard"
 
 function App() {
   
@@ -9,9 +12,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<RegisterPage/>}/>
+        <Route path="/" element={<MainLayout/>}>
+          <Route index element={<HomePage/>}/>
+          <Route path="/products/:id" element={<ProductDetails/>}/>
+          <Route path="/dashboard" element={<DashBoard/>}/>
+        </Route>
+        <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
-        <Route path="/posts" element={<PostPage/>}/>
       </Routes>
     </BrowserRouter>
   )

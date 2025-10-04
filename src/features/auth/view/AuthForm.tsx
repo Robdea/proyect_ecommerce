@@ -10,11 +10,11 @@ interface AuthFormpProps{
 
 export default function AuthForm({children, handleSubmit, textBttn, isLoading}:AuthFormpProps) {
   return (
-
-    <form onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         {children}
-      
-      <button type="submit" disabled={isLoading === "loading"}>
+      <button 
+      className="bg-blue-400"
+      type="submit" disabled={isLoading === "loading"}>
         {isLoading === "loading" ? "..." : textBttn}
       </button>
     </form>
