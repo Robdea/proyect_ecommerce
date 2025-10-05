@@ -1,19 +1,15 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useCategory } from "../../category/viewmodel/useCategory"
 import GenericList from "../../../components/ui/GenericList"
 import GenericForm from "../../../components/ui/GenericForm"
 import { CreateCategory } from "../../../lib/type"
 import Options from "../../../components/ui/Options"
 import PlusIcon from "../../../assets/Icons/PlusIcon"
+import ModalGeneric, { ModalGenericRef } from "../../../components/ui/ModalGeneric"
 
 export default function Categories() {
   const {
-    categories,
-    createCategory,
-    deleteCategory,
-    error,
-    isCreating,
-    isLoading} = useCategory()
+    categories,createCategory,deleteCategory,error,isCreating,isLoading} = useCategory()
   
     const handleDelete = (id: string) => {
         deleteCategory({id})
@@ -39,7 +35,14 @@ export default function Categories() {
     );
     const baseURL = import.meta.env.VITE_BASE_URL
 
-    const [show, setShow] = useState(false)
+    // function handleUpdate(id: string) {
+        
+    // }
+
+    const [show, setShow] = useState(false);
+
+    const modalRef = useRef<ModalGenericRef>(null);
+
     return (
         <div className="p-4">
             <div className="flex flex-col items-center p-4 gap-3">
@@ -97,8 +100,6 @@ export default function Categories() {
                             </div>
                         )}
                 </div>   
-
-
                 {isLoading ? <div>Cargando...</div> : (
                     <div className="w-full flex flex-wrap gap-4">
                         <GenericList
@@ -113,7 +114,7 @@ export default function Categories() {
                                 <div className="absolute top-2 right-2">
                                     <Options
                                         handleDelete={() => handleDelete(cat.id)}
-                                        handleEdit={() => handleDelete(cat.id)}
+                                        handleEdit={() => modalRef.current?.open()}
                                     />
                                 </div>
                             </div>
@@ -123,6 +124,54 @@ export default function Categories() {
                 )}
                 {error && <div>Error al cargar las categorias</div>}
             </div>
+
+            <ModalGeneric ref={modalRef}>
+                <div className="p-4 bg-white rounded shadow-md">
+                    <GenericForm
+                    isLoading={isCreating}
+                    handleSubmit={handleCreate}
+                    textBttn="Actualizar categoría"                    
+                    >
+                    <h1 className="text-3xl">Actualizar</h1>
+                    <label 
+                        className="font-medium"
+                        htmlFor="name">Nombre de la categoría</label>
+                        <input 
+                            id="name"
+                            className="border p-2 rounded-2xl border-gray-200"
+                            value={categoryData.name}
+                            onChange={(e) => setCategoryData({...categoryData, name: e.target.value})}
+                            placeholder="ej: teclado..."
+                            type="text" 
+                        />
+                        <label 
+                        className="font-medium"
+                        htmlFor="description">Descripción</label>
+                        <textarea 
+                            className="border p-2 rounded-2xl border-gray-200"
+                            placeholder="ej: Teclado mecánico RGB..."
+                            id="description"
+                            value={categoryData.description}
+                            onChange={(e) => setCategoryData({...categoryData, description: e.target.value})}
+                        ></textarea>
+                        <label
+                            className="font-medium"
+                        >Imagen</label>
+                        <input 
+                            id="descriptio"
+                            placeholder="imagen"
+                            className="border p-2 rounded-2xl border-gray-200"
+                            type="file" 
+                            accept="image/*"
+                            onChange={(e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                setCategoryData({...categoryData, image: e.target.files[0]});
+                                }
+                            }}
+                        />
+                    </GenericForm>
+                </div>
+            </ModalGeneric>
         </div>
     )
 }

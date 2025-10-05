@@ -13,7 +13,7 @@ export default function AuthForm({children, handleSubmit, textBttn, isLoading}:A
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         {children}
       <button 
-      className="bg-blue-400"
+      className="bg-teal-500 rounded-2xl py-2"
       type="submit" disabled={isLoading === "loading"}>
         {isLoading === "loading" ? "..." : textBttn}
       </button>
