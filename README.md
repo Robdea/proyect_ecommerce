@@ -1,3 +1,5 @@
+El frontend esta usando react + ts + vite y esta implementando mvvm
+
 # por hacer (TODO):
 
 Al ser una pagina de tecnologia, deberi de:
