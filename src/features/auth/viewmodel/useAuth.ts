@@ -1,9 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAuthStore } from "../model/authStore";
-import { registerUser, login } from "../../../services/user";
+import { registerUser, login, getMe } from "../../../services/user";
 
 export function useAuth() {
-    const {setAuth} = useAuthStore() 
+    const {setAuth, user, clearAuth} = useAuthStore() 
 
     const registerMutation = useMutation({
         mutationFn: registerUser,
@@ -20,6 +20,21 @@ export function useAuth() {
         }
     })
 
+    const getMeQuery = useQuery({
+        queryKey: ["getMe"],
+        queryFn: getMe,
+        enabled: false,
+        retry: false,
+    });
+    const checkAuth = async () => {
+        try {
+        const { data } = await getMeQuery.refetch();
+        if (data) setAuth(data);
+        } catch {
+        clearAuth();
+        }
+    };
+
     return {
         register: registerMutation.mutate,
         registerStatus: registerMutation.status, 
@@ -28,5 +43,7 @@ export function useAuth() {
         loginM: loginMutation.mutate,
         loginMStatus: loginMutation.status,
         loginMError: loginMutation.error,
+        getMeQ: getMeQuery,
+        checkAuth
     }
 }

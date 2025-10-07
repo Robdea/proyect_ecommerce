@@ -1,15 +1,16 @@
+import { User } from "../lib/type";
 import { api } from "./client"
 
-
-interface User{
-    email: string, 
-    password: string,
-    name: string
-}
 
 interface Login {
     name: string,
     password: string
+}
+
+interface Register {
+    email: string,
+    password: string,
+    name: string
 }
 
 const login = async ({name, password}: Login) =>{
@@ -26,7 +27,7 @@ const login = async ({name, password}: Login) =>{
     return data
 }
 
-const registerUser = async ({email,password,name}: User) => {
+const registerUser = async ({email,password,name}: Register) => {
     const {data} = await api.post("user",{
         email,
         password,
@@ -37,4 +38,10 @@ const registerUser = async ({email,password,name}: User) => {
     return data
 }
 
-export {registerUser, login}
+async function getMe() {
+  const { data } = await api.get<User>("auth/me");
+  console.log("Ejecutando getMe", data);
+  return data;
+}
+
+export {registerUser, login, getMe}

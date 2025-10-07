@@ -1,4 +1,4 @@
-export interface Product {
+interface Product {
   name: string
   description: string
   price: number
@@ -8,24 +8,24 @@ export interface Product {
   category: Category
 }
 
-export interface Category {
+ interface Category {
     name: string,
     description: string,
     id: string,
     image: string
 }
-export interface CartItem {
+interface CartItem {
     id: string;
     name: string;
     price: number;
     quantity: number;
 }
-export interface CreateCategory {
+ interface CreateCategory {
     name: string,
     description?: string,
     image?: File 
 }
-export interface CreateProduct {
+ interface CreateProduct {
   name: string,
   description: string,
   price: number,
@@ -34,8 +34,26 @@ export interface CreateProduct {
   image?: File
 }
 
-export interface News {
+ interface News {
     title: string,
     content: string,
     image_url?: File,
+}
+export interface User {
+  id: string
+  name: string
+  email: string
+  phone: string
+  address: string
+  role: string
+}
+
+
+export {
+    Product, Category,
+    CartItem,
+    CreateCategory,
+    CreateProduct,
+    News,
+    User
 }
