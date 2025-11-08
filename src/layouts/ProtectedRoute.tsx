@@ -8,5 +8,11 @@ export default function ProtectedRoute() {
     if (loading) return <div>Cargando...</div>;
     if (!user) return <Navigate to="/login" replace />;
 
-    return <Outlet />; 
+    return (
+    <div className="flex w-full h-screen justify-center">
+        <Outlet />
+    </div>
+    )
+    
+    ; 
 }

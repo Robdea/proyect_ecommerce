@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createProduct, deleteProduct, getAllProducts } from "../../../services/product";
+import { createProduct, deleteProduct, getAllProducts, patchProduct } from "../../../services/product";
 
 export function useProduct() {
   // Query hook for fetching all products
@@ -16,6 +16,13 @@ export function useProduct() {
       productsQuery.refetch();
     }
   });
+
+  const updateProductMutation = useMutation({
+    mutationFn: patchProduct,
+    onSuccess: () =>{
+      productsQuery.refetch();
+    }
+  })
 
   // Mutation hook for deleting a product
   const deleteProductMutation = useMutation({
@@ -41,5 +48,9 @@ export function useProduct() {
     deleteProduct: deleteProductMutation.mutate,
     isDeleting: deleteProductMutation.isPending,
     deleteError: deleteProductMutation.error,
+
+    // patch
+    updateProduct: updateProductMutation.mutate,
+    isLoadingUpdate: updateProductMutation.isPending
   };
 }

@@ -19,21 +19,27 @@ export default function RegisterPage() {
                 textBttn='Registrarse'
                 isLoading={registerStatus}
             >
+                <div>
+                    <h1 className='text-6xl font-medium'>Crea una cuenta</h1>
+                </div>
                 <input
                     type="text"
-                    placeholder="Username"
+                    placeholder="Nombre de Usuario"
+                    className='border border-gray-300 rounded-lg px-3 py-2'
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                 />
                 <input
                     type="email"
                     placeholder="Email"
+                    className='border border-gray-300 rounded-lg px-3 py-2'
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
                 <input
                     type="password"
-                    placeholder="Password"
+                    className='border border-gray-300 rounded-lg px-3 py-2'
+                    placeholder="Contraseña"
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
                 />

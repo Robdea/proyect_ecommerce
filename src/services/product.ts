@@ -1,7 +1,5 @@
-import {  CreateProduct, Product } from "../lib/type"
+import {  CreateProduct, Product, UpdateProduct } from "../lib/type"
 import { api } from "./client";
-
-
 
 async function getAllProducts() {
     try {
@@ -13,15 +11,39 @@ async function getAllProducts() {
     }
 }
 
+async function getProductsByIds(ids: string[]) {
+  if (ids.length === 0) return [];
+  const query = ids.map((id) => `ids=${encodeURIComponent(id)}`).join("&");
+  const { data } = await api.get<Product[]>(`product/by_ids?${query}`);
+  return data;
+}
+
+async function patchProduct({category_id,description,id,image,name,price,stock}:UpdateProduct) {
+  try {
+    const formData = new FormData();
+
+    const data = { category_id, description, name, price, stock };
+    formData.append("data", JSON.stringify(data));
+    
+    if (image instanceof File) {
+      formData.append("image", image);
+    }
+
+    const { data: response } = await api.patch(`product/${id}`, formData);
+    return response;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 async function createProduct({ category_id, description, name, price, stock, image }: CreateProduct ) {
   try {
     const formData = new FormData();
 
-    // Los demás campos los convertimos a JSON y los agregamos como un campo "data"
     const data = { category_id, description, name, price, stock };
     formData.append("data", JSON.stringify(data));
-
-    // Imagen opcional
+    
     if (image) {
       formData.append("image", image);
     }
@@ -31,7 +53,6 @@ async function createProduct({ category_id, description, name, price, stock, ima
         "Content-Type": "multipart/form-data"
       }
     });
-
     return response;
   } catch (error) {
     console.error("Error creating product", error);
@@ -75,5 +96,7 @@ export{
     createProduct,
     getProductById,
     deleteProduct,
-    getProductsByCategory
+    getProductsByCategory,
+    getProductsByIds,
+    patchProduct
 }

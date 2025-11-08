@@ -1,17 +1,23 @@
 import CartIcon from "../assets/Icons/CartIcon";
+import { useCartStore } from "../features/cart/model/useCartStore";
 import CartPage from "../features/cart/view/CartPage"
 import { useState } from "react"
 
 export default function CartBttn() {
   const [showCart, setShowCart] = useState(false);
 
+  const {products} = useCartStore()
+
   return (
     <div>
+      <div className="relative">
         <button 
         className="border-2 border-gray-400 p-2 rounded-full"
         onClick={() =>setShowCart((prev)=> prev= !prev)}>
           <CartIcon/>
         </button>
+        <div className="absolute bg-red-500/90 -top-3 -right-4 rounded-full p-1 px-3 text-size-display">{products.length}</div>
+      </div>
         { showCart&& (
           <div 
           onClick={() => setShowCart(false)}

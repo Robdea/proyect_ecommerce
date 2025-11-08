@@ -7,6 +7,7 @@ export default function ProductCard({id,name,price, image}:Product) {
   const {addProduct} = useCartStore();
   const baseURL = import.meta.env.VITE_BASE_URL
   const [show, setShow] = useState(false);
+  
   return (
     <div 
       onMouseEnter={() => setShow(true)}
@@ -26,7 +27,7 @@ export default function ProductCard({id,name,price, image}:Product) {
         {show && (
           <button
             className='absolute bg-emerald-400 right-0 py-2 top-2/4 rounded-2xl w-2/3 mt-2 left-1/2 transform -translate-x-1/2 text-white font-medium'
-            onClick={() => addProduct({id, name, price, quantity: 1})}
+            onClick={() => addProduct(id)}
           >
             Agregar
           </button>

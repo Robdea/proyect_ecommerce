@@ -5,7 +5,7 @@ interface Product {
   stock: number
   id: string
   image: File | string
-  category: Category
+  category?: Category | null
 }
 
  interface Category {
@@ -14,30 +14,58 @@ interface Product {
     id: string,
     image: string
 }
+
+type Item = {
+  id: string;
+  quantity: number;
+};
+
 interface CartItem {
     id: string;
     name: string;
+    image: string;
     price: number;
     quantity: number;
 }
- interface CreateCategory {
+
+interface CreateCategory {
     name: string,
     description?: string,
     image?: File 
 }
- interface CreateProduct {
+
+interface UpdateCategory {
+    id: string,
+    name: string,
+    description?: string,
+    image?: File 
+}
+
+interface CreateProduct {
   name: string,
   description: string,
   price: number,
   stock: number,
-  category_id: string,
+  category_id?: string,
   image?: File
 }
 
+interface UpdateProduct extends  CreateProduct{
+  id: stirng
+} 
+
  interface News {
+    id?: int,
+    title: string,
+    content: string,
+    image_url?: File | null,
+}
+
+interface NewD {
     title: string,
     content: string,
     image_url?: File,
+    id: number
 }
 export interface User {
   id: string
@@ -48,6 +76,21 @@ export interface User {
   role: string
 }
 
+interface Items {
+  id: string,
+  product_name: string,
+  product_price: number,
+  quantity: number,
+  product: Product
+}
+
+export interface Transaction {
+  total: number
+  user_id: string
+  id: string
+  created_at: string
+  items: [Items]
+}
 
 export {
     Product, Category,
@@ -55,5 +98,9 @@ export {
     CreateCategory,
     CreateProduct,
     News,
-    User
+    User,
+    NewD,
+    Item,
+    UpdateCategory,
+    UpdateProduct
 }

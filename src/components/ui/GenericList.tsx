@@ -13,7 +13,8 @@ export default function GenericList<T>({getKey, items,renderItem}:GenericListPro
         <>
             {
                 items.map(item => (
-                    <div key={getKey(item)}>
+                    <div  
+                    key={getKey(item)}>
                         {renderItem(item)}
                     </div>
                 ))

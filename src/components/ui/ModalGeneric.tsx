@@ -7,6 +7,7 @@ export interface ModalGenericRef {
 
 interface ModalGenericProps {
   children?: React.ReactNode;
+  className?: string;
 }
 
 const ModalGeneric = forwardRef<ModalGenericRef, ModalGenericProps>(
@@ -26,12 +27,23 @@ const ModalGeneric = forwardRef<ModalGenericRef, ModalGenericProps>(
       close: closeModal,
     }));
 
+  
+    const handleBackdropClick = () => {
+      const dialog = modalRef.current;
+      if (dialog) {
+        closeModal();
+      }
+    };
+
     return (
       <dialog 
-      className="w-full h-screen bg-transparent flex justify-center items-center"
+      className={`w-full h-screen bg-transparent`}
       ref={modalRef}>
-        {children}
-        <button onClick={closeModal}>Cerrar</button>
+        <div 
+        onClick={handleBackdropClick}
+        className="w-full h-full justify-center items-center flex">
+            {children}
+        </div>
       </dialog>
     );
   }

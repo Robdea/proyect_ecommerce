@@ -15,7 +15,7 @@ export default function ProductDetails() {
     
     console.log("productos", products);
     return (
-        <div className="h-full flex gap-5 flex-col items-center px-5">
+        <div className="h-full flex gap-5 flex-col items-center px-14 mt-4">
             {isLoading ? (
                 <p>Cargando...</p>
             ) : (

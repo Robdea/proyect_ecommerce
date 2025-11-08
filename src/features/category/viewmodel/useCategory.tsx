@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createCategory, deleteCategory, getAllCategories } from "../../../services/category";
+import { createCategory, deleteCategory, getAllCategories, patchCategory } from "../../../services/category";
 
 export function useCategory() {
   // Query hook for fetching all categories
@@ -14,8 +14,15 @@ export function useCategory() {
     onSuccess: () => {
       // Invalidate and refetch categories after creation
       categoriesQuery.refetch();
-    }
+    },
   });
+
+  const patchCategoryMutation = useMutation({
+    mutationFn: patchCategory,
+    onSuccess: () => {
+      categoriesQuery.refetch()
+    }
+  })
 
   // Mutation hook for deleting a category
   const deleteCategoryMutation = useMutation({
@@ -41,5 +48,10 @@ export function useCategory() {
     deleteCategory: deleteCategoryMutation.mutate,
     isDeleting: deleteCategoryMutation.isPending,
     deleteError: deleteCategoryMutation.error,
+
+    // patch
+    updateCategory: patchCategoryMutation.mutate,
+    isPatchPending: patchCategoryMutation.isPending,
+    patchError: patchCategoryMutation.error,
   };
 }

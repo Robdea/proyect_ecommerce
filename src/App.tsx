@@ -10,10 +10,12 @@ import PublicRoute from "./layouts/PublicRoute"
 import { useAuth } from "./features/auth/viewmodel/useAuth"
 import { useEffect } from "react"
 import { useAuthStore } from "./features/auth/model/authStore"
+import HistoryPage from "./pages/HistoryPage"
 
 function App() {
   const {checkAuth} = useAuth();
   const {setLoading} = useAuthStore()
+  
   useEffect(() => {
     const initAuth = async () => {
       setLoading(true);
@@ -31,6 +33,7 @@ function App() {
         <Route path="/" element={<MainLayout/>}>
           <Route path="/products/:id" element={<ProductDetails/>}/>
           <Route index element={<HomePage/>}/>
+          <Route path="/history" element={<HistoryPage/>}/>
         </Route>
 
         <Route element={<ProtectedRoute/>}>
